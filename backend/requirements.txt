@@ -11,3 +11,6 @@ cryptography
 python-multipart
 python-dotenv
 aiohttp
+faster-whisper
+deep-translator
+gTTS
