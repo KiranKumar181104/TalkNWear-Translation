@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+websockets
+motor
+python-jose[cryptography]
+passlib[bcrypt]
+pydantic-settings
+numpy
+scipy
+cryptography
+python-multipart
+python-dotenv
+aiohttp
