@@ -131,18 +131,18 @@ function App() {
         if (socket.current && socket.current.readyState === WebSocket.OPEN) {
           socket.current.send(audioBlob);
           setIsThinking(true);
-          // Safety timeout: if backend doesn't respond in 30s, reset
+          // Safety timeout: if backend doesn't respond in 60s, reset
           if (thinkingTimeout.current) clearTimeout(thinkingTimeout.current);
           thinkingTimeout.current = setTimeout(() => {
             setIsThinking(false);
             setMessages(prev => [...prev, {
               id: Date.now(),
               original: '(No response from server)',
-              translated: 'Backend may be processing slowly or offline. Try again.',
+              translated: 'Backend may be processing slowly or waking up from sleep. Try again.',
               detected: 'timeout',
               timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             }]);
-          }, 30000);
+          }, 60000);
         }
         setIsRecording(false);
       };
