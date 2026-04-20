@@ -164,6 +164,10 @@ function App() {
     }
   };
 
+  const clearMessages = () => {
+    setMessages([]);
+  };
+
   return (
     <div className="dashboard">
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
@@ -186,7 +190,14 @@ function App() {
       <div className="grid-layout">
         <main className="glass-card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1.5rem' }}>
-            <h2 style={{ margin: 0 }}>Live Transcript</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <h2 style={{ margin: 0 }}>Live Transcript</h2>
+              {messages.length > 0 && (
+                <button onClick={clearMessages} style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', background: 'transparent', border: '1px solid var(--text-muted)', color: 'var(--text-muted)', borderRadius: '4px', cursor: 'pointer' }}>
+                  Clear
+                </button>
+              )}
+            </div>
             <div style={{ display: 'flex', gap: '1rem' }}>
               <div className="language-pill">{LANGUAGES.find(l => l.code === sourceLang).name}</div>
               <span style={{ color: 'var(--text-muted)' }}>→</span>

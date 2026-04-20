@@ -7,6 +7,10 @@ from faster_whisper import WhisperModel
 from deep_translator import GoogleTranslator
 from gtts import gTTS
 
+# Ensure ffmpeg binaries are in PATH for Whisper (Fixes Render missing ffmpeg)
+import static_ffmpeg
+static_ffmpeg.add_paths()
+
 logger = logging.getLogger(__name__)
 
 # Mapping from Whisper language codes to Google Translate language codes
