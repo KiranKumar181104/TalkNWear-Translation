@@ -27,8 +27,9 @@ function App() {
   const thinkingTimeout = useRef(null);
 
   useEffect(() => {
-    // Initialize WebSocket
-    const ws = new WebSocket('ws://localhost:8000/ws/stream');
+    // Initialize WebSocket — use env var for deployed backend, fallback to localhost for dev
+    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/stream';
+    const ws = new WebSocket(wsUrl);
     socket.current = ws;
 
     ws.onopen = () => setStatus('online');
