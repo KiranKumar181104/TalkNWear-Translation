@@ -28,7 +28,17 @@ function App() {
 
   useEffect(() => {
     // Initialize WebSocket — use env var for deployed backend, fallback to localhost for dev
-    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/stream';
+    let wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/stream';
+    
+    // Auto-correct common misconfigurations (http instead of ws, etc.)
+    if (wsUrl.startsWith('http://')) wsUrl = wsUrl.replace('http://', 'ws://');
+    if (wsUrl.startsWith('https://')) wsUrl = wsUrl.replace('https://', 'wss://');
+    
+    // Ensure WSS is used if the frontend is hosted on HTTPS (Vercel)
+    if (window.location.protocol === 'https:' && wsUrl.startsWith('ws://')) {
+      wsUrl = wsUrl.replace('ws://', 'wss://');
+    }
+
     const ws = new WebSocket(wsUrl);
     socket.current = ws;
 
