@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
 # Config (matching backend settings for prototype)
 AUDIO_ENCRYPTION_KEY = "32byte_long_encryption_key_12345"
-BACKEND_URL = "ws://localhost:8000/ws/stream"
+BACKEND_URL = os.getenv("BACKEND_URL", "wss://talknwear-translation.onrender.com/ws/stream")
 
 class TalkNWearEdge:
     def __init__(self):
@@ -64,3 +64,4 @@ if __name__ == "__main__":
         asyncio.run(edge.stream_audio())
     except KeyboardInterrupt:
         print("\nWearable shutting down.")
+
