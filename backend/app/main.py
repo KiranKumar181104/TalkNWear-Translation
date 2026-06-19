@@ -25,8 +25,11 @@ app.add_middleware(
 async def root():
     return {"message": "TalkNWear AI Backend is running"}
 
-@app.websocket("/ws/stream")
-async def websocket_endpoint(websocket: WebSocket):
+@app.head("/")
+async def root_head():
+    return None
+
+async def handle_audio_stream(websocket: WebSocket):
     await websocket.accept()
     logger.info("New wearable connected via WebSocket")
     
@@ -107,6 +110,15 @@ async def websocket_endpoint(websocket: WebSocket):
         except:
             pass
 
+@app.websocket("/ws/stream")
+async def websocket_endpoint(websocket: WebSocket):
+    await handle_audio_stream(websocket)
+
+@app.websocket("/")
+async def websocket_root_endpoint(websocket: WebSocket):
+    await handle_audio_stream(websocket)
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
